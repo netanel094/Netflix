@@ -5,7 +5,7 @@ import "../Row.css";
 import useMovies from "../hooks/useMovies";
 const baseImgUrl = "https://image.tmdb.org/t/p/original/";
 
-export default function Row({ title, fetchUrl }) {
+export default function Row({ title, fetchUrl, isLargeRow }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const { movies, loading, error } = useMovies(fetchUrl);
 
@@ -38,9 +38,11 @@ export default function Row({ title, fetchUrl }) {
         {movies.map((movie, index) => (
           <img
             id={`${title}_${index}`}
-            className="row__poster"
+            className={`row__poster ${isLargeRow && "row__posterLarge"}`}
             key={movie.id}
-            src={`${baseImgUrl}${movie.poster_path}`}
+            src={`${baseImgUrl}${
+              isLargeRow ? movie.poster_path : movie.backdrop_path
+            }`}
             alt={movie.name}
           />
         ))}
@@ -55,4 +57,5 @@ export default function Row({ title, fetchUrl }) {
 Row.propTypes = {
   title: PropTypes.string.isRequired,
   fetchUrl: PropTypes.string.isRequired,
+  isLargeRow: PropTypes.bool,
 };
