@@ -8,6 +8,7 @@ const baseImgUrl = "https://image.tmdb.org/t/p/original/";
 export default function Row({ title, fetchUrl }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const { movies, loading, error } = useMovies(fetchUrl);
+
   const move = (delta) => () => {
     const nextIndex = currentIndex + delta;
     const nextElement = document.getElementById(`${title}_${nextIndex}`);
